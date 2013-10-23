@@ -1,0 +1,11 @@
+
+# Artifact
+/maru-eval
+
+# Autoconf
+/Makefile
+/autom4te.cache/
+/config.log
+/config.status
+/maru-eval.dSYM/
+

@@ -1,0 +1,25 @@
+# File types
+
+
+# Maru top-level concepts
+
+`define-form`
+  Define a new form
+  http://stackoverflow.com/questions/2877371/definition-of-lisp-form
+
+`define-selector`
+  The name and top-level dispatch for a multi-method
+
+`define-method`
+  An implementation (method) of a multi-method
+
+
+# Naming Conventions
+
+**foo** - the 'foo' global definition
+*foo*   - the 'foo' global definition (different than **?)
+<foo>   - the 'foo' structure
+$foo    - the f'foo' multimethod selector
+%foo    - ?
+
+

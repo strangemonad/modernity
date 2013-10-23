@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# A wrapper script to invoke modernity-eval
+
+# A few assumptions here:
+#
+# Hard coded paths - could play nicer with `configure --prefix...; make install` etc
+
+set -e
+
+MODERNITY_ROOT=`dirname $0`/..
+
+# MARU_ROOT="${MODERNITY_ROOT}/tools/maru"
+# MARU_BOOTSTRAP_ROOT="${MODERNITY_ROOT}/tools/maru-bootstrap"
+MODERNITY_BOOT_L="${MODERNITY_ROOT}/src/boot.l"
+
+# MARU_EVAL="${MARU_ROOT}/maru-eval"
+# MARU_BOOT_L_ARG=${MARU_BOOTSTRAP_BOOT_L}
+# if [ ! -e ${MARU_EVAL} ]; then
+#   MARU_EVAL="${MARU_BOOTSTRAP_ROOT}/maru-eval"
+#   MARU_BOOT_L_ARG="-b ${MARU_BOOTSTRAP_BOOT_L}"
+# fi
+
+MODERNITY_EVAL="${MODERNITY_ROOT}/modernity-eval"
+if [ ! -e ${MODERNITY_EVAL} ]; then
+  echo "You need to build a modernity-eval:"
+  echo
+  echo "    ./bin/make-modernity-1"
+  echo
+fi
+
+if [ ! -n "$1" ];
+then
+  INPUT="-"
+else
+  INPUT=${*}
+fi
+
+${MODERNITY_EVAL} ${MODERNITY_BOOT_L} ${INPUT}
+
+
+

@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+# Generating code that has GDB (dwarf debug symbols) is hard. This is a hack.
+# This tool lets you paste a GDB address backtrace and get symbols by inspecting
+# the intermediate generated assembly file.
+
+import re
+import sys
+import os
+
+
+# Inferring symbols from lables
+def find_label(symbol, asm):
+    match = re.search("^_%s:$" % symbol, asm, re.MULTILINE)
+    if not match:
+        return -1
+    return match.start()
+
+def funcname_for_index(index, asm):
+    if index < 0:
+        return "?"
+
+    name_start = asm.rfind("## defunc ", 0, index)
+    match = re.search("^## defunc ([_a-zA-Z0-9]*)", asm[name_start:])
+    return match.groups(0)[0].strip()
+
+def symbol(label, asm):
+    return funcname_for_index(find_label(label, asm), asm)
+
+
+# Extracting labels from GCC backtraces
+def extract_label(bt_entry):
+    return re.search("in (.*) \(\)", bt_entry).groups()[0]
+
+def extract_labels(backtrace_entries):
+    return [extract_label(bt_entry) for bt_entry in backtrace_entries]
+
+
+# Generating the symbolicated BT
+def symbolicated_bt(backtrace, asm):
+    symbols = [symbol(label, asm) for label in extract_labels(backtrace)]
+    bt_entries_and_syms = zip(backtrace, symbols)
+    return ["%s:\t%s" % (bt_entry, sym) for (bt_entry, sym) in bt_entries_and_syms]
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print "Usage:"
+        print "\t%s \"path/to/assembly.s\" \"multi-line backtrace string\"" % os.path.basename(sys.argv[0])
+        sys.exit(1)
+
+    backtrace = sys.argv[2].split("\n")
+    asm = open(sys.argv[1], "r").read()
+    print "-------------\n\n"
+    print "\n".join(symbolicated_bt(backtrace, asm))
+

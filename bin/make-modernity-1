@@ -1,0 +1,7 @@
+
+
+#./bin/maru-eval src/apps/gen-modernity-assembly.l > modernity-eval.s
+time ./bin/maru-eval src/apps/emit.l src/apps/eval.l > modernity-eval.s
+
+gcc-4.2 -m32 -Wl,-no_pie modernity-eval.s -o modernity-eval
+

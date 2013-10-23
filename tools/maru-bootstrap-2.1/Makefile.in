@@ -1,0 +1,8 @@
+
+
+all : maru-eval
+
+# Not the cleanest or most efficient, just hard code everything
+maru-eval : src/eval.c src/buffer.h src/buffer.c src/gc.h src/gc.c src/chartab.h src/wcs.c
+	@CC@ @CFLAGS@ src/eval.c src/buffer.c src/wcs.c -o maru-eval
+
