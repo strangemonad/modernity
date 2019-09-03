@@ -1,11 +1,22 @@
 # Modernity
 
-My attempt at creating a usable "personal computing" system - in the
-spirit of the Xerox PARC work that led to smalltalk influenced by many
-things but in large part the work at VPRI on the fonc project.
+Experiments and explorations in building a lively "personal" computing system. Think of this more as lab notes at various points in time.
+ 
+The lisp-like/ smalltalk-like hybrid language is inspired by Ian Piamurta's work as part of the View Points Research Institute's STEPS program where he developed a series of related systems and dynamic language modles "Late-bound Object Lambda Architectures", "cola", "fonc" etc. Piamurta's maru language reader and environment was forked as the main way to bootstrap things as I gradually explored changing core parts of the language in a running system.
 
-# Learning
-XXX cognitive constructivism, playground, exploratorium etc.
+The "lively" bit is inspired by Dan Ingalls, Alan Kay and many other's work on various smalltalk-like computing systems while at PARC and more recently Ingalls' "Lively kernel".
+
+
+tags: cognitive constructivism, playground, exploratorium
+
+# Experiments
+Some of the experiments attempted:
+
+- Swap out the garbage collector for a new version within the running system.
+- Change the semantics of quasi quoting macros
+- Swap out the reader entirely by starting with a manu 2.1 system reading the new reader's definition (defined in maru 2.1 syntax) and swapping to it so that next elements of the input stream are read as tyhe new language (I can't remember if I read about Racket's ability to define new languages before or after exploring this approach to reader swapping. It was inspried by how the Burrows B5000 disk machine loaded a description of the rest of the tape's file system from the front of the tape. It was also inspried by the implementation of "Smalltalk in Smalltalk" (ref? Dan Ingalls? "Early history of smalltalk"? "Smalltalk on a Risc"?). It was also inspired by Dan Amelang's OMeta (another VPRI STEPS project).
+- Tinkered with "re-bootstrapping" to prevent needing to re-read new language definitions by letting the currently running reader/env re-emmit a new executable by emitting x86 code for the currently loaded forms (modulo suspending full program state).
+
 
 # Development
 
@@ -46,8 +57,6 @@ Useful definitions
 
 
 #Contact
-
-shawn@strangemonad.com - I'll probably not see github emails.
 
 # TODO
 Other things to add to Modernity-1 / questions to ponder?
